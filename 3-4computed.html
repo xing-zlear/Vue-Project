@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>计算属性，方法，侦听器</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- {{fullName}} --><!-- 计算属性 -->
+		<!-- {{fullName()}} --><!-- 方法 -->
+		{{fullName}}<!-- 侦听器 -->
+
+		{{age}}
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				firstName: 'Zlear',
+				lastName: 'xing',
+				age: 28,
+				// fullName: 'zlear xing'
+			},
+			// 计算属性
+			computed: {
+				// fullName: function() {
+				// 	console.log('计算了一次');
+				// 	return this.firstName + ' ' + this.lastName
+				// },
+				fullName: {
+					get: function() {
+						console.log('fullName计算了一次get');
+						return this.firstName + ' ' + this.lastName
+					},
+					set: function(nameValue) {
+						console.log('fullName计算了一次set');
+						var names = nameValue.split(' ');
+						this.firstName = names[0];
+						this.lastName = names[names.length - 1];
+					}
+				}
+			},
+			// 方法
+			// methods: {
+			// 	fullName: function() {
+			// 		console.log('计算了一次');
+			// 		return this.firstName + ' ' + this.lastName
+			// 	}
+			// }
+			// 侦听器
+			// watch: {
+			// 	firstName: function(val) {
+			// 		console.log('firstName计算了一次');
+			// 		this.fullName = val + ' ' + this.lastName
+			// 	},
+			// 	lastName: function() {
+			// 		console.log('lastName计算了一次');
+			// 		this.fullName = this.firstName + ' ' + this.lastName
+			// 	},
+			// 	fullName: function() {
+			// 		console.log('fullName计算了一次get');
+			// 		this.fullName = this.firstName + ' ' + this.lastName
+			// 	}
+			// }
+		});
+	</script>
+</body>
+</html>

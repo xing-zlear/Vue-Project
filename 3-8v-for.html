@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的列表渲染</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 循环数组 -->
+		<h1>循环数组</h1>
+		<template v-for="(item,index) of list">
+			<div>{{index}} -- {{item.text}}</div>
+			<span>{{item.text}}</span>
+		</template>
+		<!-- 循环对象 -->
+		<h1>循环对象</h1>
+		<div v-for="(item,key,index) of userInfo">
+			{{item}}--{{key}} -- {{index}}
+		</div>
+		<span  v-for="(item,key,index) of userInfo">{{item}}</span>
+	</div>
+
+	<script>
+	// push pop shift unshift splice sort reverse
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				// 循环数组
+				list: [{
+					id: "001",
+					text: "hello"
+				},{
+					id: "002",
+					text: "zlear"
+				},{
+					id: "003",
+					text: "good"
+				}],
+				// 循环对象
+				userInfo: {
+					name: 'zlear',
+					age: 24,
+					gender: 'remale'
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的样式绑定</title>
+	<script src="./vue.js"></script>
+	<style type="text/css">
+		.active {
+			color: #f00;
+		}
+	</style>
+</head>
+<body>
+	<div id="app">
+		<!-- class的绑定（对象） -->
+		<div @click="handleDivClick"
+			 :class="{active: isActive}">
+			 class的对象绑定——helo Zlear</div>
+		<!-- class的绑定（数组变量）（数组内可定多个变量） -->
+		<div @click="handleDivClick2"
+			 :class="[actived]">
+			 helo Zlear</div>
+		<!-- style内联样式的绑定（对象） -->
+		<div :style="styleObj" @click="handleDivClick3">
+			hello Fedezer
+		</div>
+		<!-- style内联样式的绑定（数组） -->
+		<div :style="[styleObj, {fontSize: '20px'}]" @click="handleDivClick3">
+			hello Fedezer
+		</div>
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				isActive: false,
+				actived: '',
+				styleObj: {
+					color: "#000",
+					backgroundColor:'#0f0'
+				}
+			},
+			methods: {
+				// class的对象绑定：借助class和对象的形式绑定样式
+				handleDivClick: function() {
+					this.isActive = !this.isActive;
+				},
+				// class的数组变量绑定
+				handleDivClick2: function() {
+					this.actived = this.actived === 'active' ? '' : 'active';
+					// 或者写成以下
+					// this.actived === 'active' ? this.actived = '' : this.actived = 'active';
+				},
+				// style内联样式的对象绑定
+				handleDivClick3: function() {
+					this.styleObj.color = this.styleObj.color === '#000' ? '#f00' : '#000';
+				}
+			}
+		});
+	</script>
+</body>
+</html>

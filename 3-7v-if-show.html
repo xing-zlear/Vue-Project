@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的条件渲染</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		<!-- 相对来说，v-show的性能更高，因为v-if会频繁的添加删除dom -->
+		<h1>v-show  v-if</h1>
+		<div v-if="show">{{message}}</div>
+		<div v-show="show">{{message}}</div>
+		<!-- v-if和v-else -->
+		<h1>v-if  v-else</h1>
+		<div v-if="show2">{{message2}}</div>
+		<div v-else>kiss fedezer</div>
+		<!-- v-if  v-else-if  v-else -->
+		<h1>v-if  v-else-if  v-else</h1>
+		<div v-if="show3 === 'a'">this is a</div>
+		<div v-else-if="show3 === 'b'">this is b</div>
+		<div v-else>this is other</div>
+		<!-- 当给某个元素标签加个key值的时候，vue会知道它是页面上唯一的元素，就不会尝试复用了（vue虚拟dom） -->
+		<h1>key</h1>
+		<div v-if="show4">
+			用户名：<input key="username"/>
+		</div>
+		<div v-else>
+			邮箱名：<input key="password"/>
+		</div>
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: '#app',
+			data: {
+				show: true,
+				show2: false,
+				show3: 'w',
+				show4: false,
+				message: 'hello Zlear',
+				message2: 'hello Fedezer'
+			}
+		});
+	</script>
+</body>
+</html>

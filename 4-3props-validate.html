@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>组件参数校验与非Props特性</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+	<!-- :content="zlear"会报未定义错，因为冒号后应该是表达式，而zlear是个字符串，正确的应该写成:content=" 'zlear' "，这样传的就是string了； 同理，:content="123"，传的是Number，:content=" '123' "传的是string -->
+	<child :content="'wqewerx'"></child>
+</div>
+
+<script>	
+	/* props特性：
+	    1、在子组件中有props来接收父组件传来的数据
+	    2、可以在子组件中使用传来的数据，但是父组件设置的属性不会在最外层的元素上显示
+	  非props特性：
+	    1、无法接收父组件传来的数据（因为在组件上定义了属性,而子组件中没有相应的props来接收父组件传来的数据）；
+	    2、子组件内不可使用该属性值，父组件设置的属性会在其最外层的元素上显示，页面会这样显示：<div content="wqewerx"></div>
+	*/
+	Vue.component('child', {
+		/*  为了定制 prop 的验证方式，你可以为 props 中的值提供一个带有验证需求的对象，而不是一个字符串数组。*/
+		/*
+            props从数组改为对象形式是，作为对象属性的参数可以写为对象形式
+            参数对象含有4个属性，其中，type、required、validator用于参数校验
+            type：设定参数类型(`null` 匹配任何类型)
+            required：设定是否必传，当设为true的时候，不传会报错
+            default：设定默认值
+            validator：是一个函数，拥有一个代表传入参数的形参，可以自定义各种校验，当返回为false时，会报错，表示没通过校验
+         */
+		props: {
+			// 'content': Number,
+			// 'content': [Number, String],多个可能的类型
+			'content': {
+				type: String,
+				required: false,
+				default: 'de',
+				validator: function(value) {
+					return (value.length > 5)
+				}
+			}
+		},
+		template: '<h2>{{content}}</h2>'
+	});
+	var vm = new Vue({
+		el: '#root'
+	});
+</script>
+
+</body>
+</html>

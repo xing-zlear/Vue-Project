@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>父子组件传值</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+	<div id="root">
+		<counter count="3" @change="handleIncrease"></counter>
+		<!-- count前面加冒号，后面的0和1就是数字，否则，后面的0和1是字符串，因为加冒号之后，后面是个js表达式 -->
+		<counter count="1"  @change="handleIncrease"></counter>
+		<div>{{total}}</div>
+	</div>
+
+	<script>
+		var counter = {
+			props: ['count'],
+			template: '<div @click="handleClick">{{number}}</div>',
+			data: function() {
+				return {
+					                /*
+                    如果想要使用props中的值，和调用data中的值一样的方法，即：this.value
+                */
+					number: this.count
+				}
+			},
+			methods: {
+				handleClick: function() {
+					/*
+                    如果想要实现自增的效果，只需要this.count，这种方法确实可以实现效果
+                    但是，Vue会提示警告
+                    因为，Vue有一个单向数据流的概念，即：
+                    父组件可以向子组件传递参数，子组件也可以任意使用该参数，但是，子组件不能反过来修改父组件的参数
+                    即子组件可以使用内容，但是，不能修改父组件传递过来的内容
+                    因为如果可以双向传递的话，子组件之间可以相互影响，会极大的增加耦合度
+                 */
+					this.number ++ ;
+					 /*
+                    每次增加2，并将增加的数量当做参数抛出
+                    子组件向外抛出事件的时候可以携带参数
+                    如果想要携带多个参数，可以以数组的形式传递，如：
+                    this.$emit('inc', [2,3,4])
+                 */
+
+					this.$emit('change', 1);
+				}
+			}
+		};
+		var vm = new Vue({
+			el: '#root',
+			data: {
+				total: 0
+			},
+			components: {
+				counter: counter
+			},
+			methods: {
+				handleIncrease: function(step) {
+					this.total += step;
+				}
+			}
+		});
+	</script>
+</body>
+</html>
