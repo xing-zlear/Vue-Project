@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的列表渲染</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="app">
+	<!-- 循环数组 -->
+	<h1>循环数组</h1>
+	<template v-for="(item,index) of list">
+		<div>{{index}} -- {{item.text}}</div>
+		<span>{{item.text}}</span>
+	</template>
+	<!-- 循环对象 -->
+	<h1>循环对象</h1>
+	<div v-for="(item,key,index) of userInfo">
+		{{item}}--{{key}} -- {{index}}
+	</div>
+	<span  v-for="(item,key,index) of userInfo">{{item}}</span>
+</div>
+
+<script>
+	/*
+	当我们尝试修改数组里内容的时候，不能通过下标的形式改变数组，只能通过vue提供的几个数组变异方法来操作数组，才能实现数据变化，vue一共提供了7个数组变异方法（pushpop shift unshift splice sort reverse）
+	想要改变数组让页面也变化，除了可以用vue提供的变异方法，还可以直接改变数组的引用
+	循环数组：不能直接改值，不能直接加入元素，增删改要用变异方法，整体修改直接改引用 
+	循环对象：可以直接改值，不能直接加入键值对，整体修改直接改引用,vue的set方法也可改变
+	 */
+	var vm = new Vue({
+		el: '#app',
+		data: {
+			// 循环数组
+			list: [{
+				id: "001",
+				text: "hello"
+			},{
+				id: "002",
+				text: "zlear"
+			},{
+				id: "003",
+				text: "good"
+			}],
+			// 循环对象
+			userInfo: {
+				name: 'zlear',
+				age: 24,
+				gender: 'remale'
+			}
+		}
+	});
+</script>
+</body>
+</html>

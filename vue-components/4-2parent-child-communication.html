@@ -19,9 +19,13 @@
 			template: '<div @click="handleClick">{{number}}</div>',
 			data: function() {
 				return {
-					                /*
-                    如果想要使用props中的值，和调用data中的值一样的方法，即：this.value
+				/*
+                    如果想要使用props中的值，和调用data中的值一样的方法，即：this.value;
+                    父组件向子组件传递数值是通过 属性的方法
+					子组件向父组件传递数值是通过 事件 $emit
+					父传子是单向数据流，子不能修改父组件传递过来的数据，可以copy 一个副本，修改副本
                 */
+               
 					number: this.count
 				}
 			},

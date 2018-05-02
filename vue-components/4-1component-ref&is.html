@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue组件使用中的细节点</title>
+	<script src="./vue.js"></script>
+</head>
+<body>
+<div id="root">
+	<h1>is属性和子组件中的data函数</h1>
+	<table>
+		<tbody>
+			<!-- 正常思维下，此处应该直接填<row></row>，但是<row>会被当做无效内容，因此会导致错误的渲染结果
+            因为，HTML本身有一些限制，像<ul>、<ol>、<table>、<select>这样的元素中只允许包含特定的元素
+            并且，一些像<option>之类的元素只能出现在某些特定元素的内部
+            为了规避错误的渲染，变通方案是使用is属性
+            <tr is="row"></tr>
+            以上的例子的意思是：虽然使用的是tr（为了满足HTML规范），但是，实际上是<row></row> -->
+			<tr is="row"></tr>
+			<tr is="row"></tr>
+		</tbody>
+	</table>
+
+	<h1>ref的使用</h1>
+	<!--
+        Vue中不推荐操作dom，但是有时候非得操作dom不可
+        而在Vue中，可以使用ref来操作dom
+    -->
+	<div ref="hello" @click="handleClick">hello world</div>
+	<row ref="hi"  @click="handleClick"></row>
+
+	<h1>counter例子</h1>
+	<counter ref="one" @change="handleChange"></counter>
+	<counter ref="two" @change="handleChange"></counter>
+	<div>{{total}}</div>
+</div>
+
+<script>
+	Vue.component('row', {
+		/* 在子组件里定义data的时候，data必须是一个函数，而不能是一个对象（为了让每一个子组件都有一个独立的数据存储） */
+		data: function() {
+			return {
+				content: 'this is a content'
+			}
+		},
+		template: '<tr><td>{{content}}</td></tr>'
+	});
+	Vue.component('counter', {
+		data: function() {
+			return {
+				number: 0
+			}
+		},
+		template: '<div @click="handleClick">{{number}}</div>',
+		methods: {
+			handleClick: function() {
+				this.number ++;
+				this.$emit('change');
+			}
+		}
+	});
+	
+	var vm = new Vue({
+		el: '#root',
+		data: {
+			total: 0
+		},
+		methods: {
+			handleClick: function() {
+				/*
+                    this.$refs代表Vue实例中所有的引用（ref）
+                    对dom节点定义ref后，this.$refs.ref获取到的是dom节点
+                 */
+				console.log(this.$refs.hello);
+				console.log(this.$refs.hi);
+			},
+			handleChange: function() {
+				/*
+                    对组件定义ref后，使用this.$ref.ref获取到的不是dom节点，而是组件实例
+                 */
+				console.log(this.$refs.one.number);
+				console.log(this.$refs.two.number);
+				this.total = this.$refs.one.number + this.$refs.two.number;
+			}
+		}
+	});
+</script>
+</body>
+</html>

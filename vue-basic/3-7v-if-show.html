@@ -6,6 +6,7 @@
 	<script src="./vue.js"></script>
 </head>
 <body>
+	<!-- 一般来说，v-if 有更高的切换开销，而 v-show 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 v-show 较好；如果在运行时条件很少改变，则使用 v-if 较好。 -->
 	<div id="app">
 		<!-- 相对来说，v-show的性能更高，因为v-if会频繁的添加删除dom -->
 		<h1>v-show  v-if</h1>
@@ -13,6 +14,7 @@
 		<div v-show="show">{{message}}</div>
 		<!-- v-if和v-else -->
 		<h1>v-if  v-else</h1>
+		<!-- 如果要用v-else，必须要和v-if连在一起，不能隔其他元素，不然会报错 -->
 		<div v-if="show2">{{message2}}</div>
 		<div v-else>kiss fedezer</div>
 		<!-- v-if  v-else-if  v-else -->
@@ -20,7 +22,7 @@
 		<div v-if="show3 === 'a'">this is a</div>
 		<div v-else-if="show3 === 'b'">this is b</div>
 		<div v-else>this is other</div>
-		<!-- 当给某个元素标签加个key值的时候，vue会知道它是页面上唯一的元素，就不会尝试复用了（vue虚拟dom） -->
+		<!-- Vue在重新渲染页面的时候，它会尽量尝试去复用页面上已经存在的dom, 当给某个元素标签加个key值的时候，vue会知道它是页面上唯一的元素，就不会尝试复用了（vue虚拟dom） -->
 		<h1>key</h1>
 		<div v-if="show4">
 			用户名：<input key="username"/>

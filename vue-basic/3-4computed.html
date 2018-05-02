@@ -6,6 +6,12 @@
 	<script src="./vue.js"></script>
 </head>
 <body>
+	<!-- 计算属性有个非常重要的知识点，它是内置缓存的
+	computed: 有缓存 只监听所依赖的数据，其他不相关的数据发生改变并不会触发computed里的方法，只有所依赖的数据发生改变才会触发computed里相应的方法重新计算.同一个效果，用计算属性和方法都能实现，相比来说，计算属性更好，性能更高，因为computed有缓存机制
+	methods:数据发生变化就会执行methods里的方法，无论发生变化的是不是其所依赖的数据,没有缓存
+	watch：跟computed类似，但代码比起computed来说不够简洁 -->
+	<!-- 所以一个需求如用computed、methods、watch都可以实现的话，推荐用computed、性能高
+	遇到插值表达式，会先到data里找，找不到的话就去computed里找 -->
 	<div id="app">
 		<!-- {{fullName}} --><!-- 计算属性 -->
 		<!-- {{fullName()}} --><!-- 方法 -->
