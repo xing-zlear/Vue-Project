@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的插槽（slot）</title>
+	<script src="../vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+	<child-one v-if="show === 'child-one'"></child-one>
+	<child-two v-if="show === 'child-two'"></child-two>
+	<button @click="handleClick">change</button>
+
+	<!-- 动态组件 -->
+	<h1>动态组件</h1>
+	<component :is="show"></component>
+	<button @click="handleClick">change</button>
+
+	<!-- v-once -->
+	<h1>v-once</h1>
+</div>
+
+<script>	
+	Vue.component('child-one', {
+		template: '<div>child-one</div>'
+	});
+	Vue.component('child-two', {
+		template: '<div>child-two</div>'
+	});
+
+	// v-once
+	// v-once：将dom保存到内存中，适用于同一个组件多次v-if的场景
+	Vue.component('child-one', {
+		template: '<div v-once>child-one</div>'
+	});
+	Vue.component('child-two', {
+		template: '<div v-once>child-two</div>'
+	});
+
+	var vm = new Vue({
+		el: '#root',
+		data: {
+			show: 'child-one'
+		},
+		methods: {
+			handleClick: function() {
+				this.show = this.show === 'child-one' ? 'child-two' : 'child-one';
+			}
+		}
+	});
+</script>
+
+</body>
+</html>

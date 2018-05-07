@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>非夫子组件间传值(Bus/总线／发布订阅模式/观察者模式)</title>
+	<script src="../vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+	<child content="Zlear"></child>
+	<child content="Fedezer"></child>
+</div>
+
+<script>	
+	Vue.prototype.bus = new Vue();
+
+	Vue.component('child', {
+		props: {
+			content: String
+		},
+		data: function() {
+			return {
+				selfContent: this.content
+			}
+		},
+		template: '<div @click="handleClick">{{selfContent}}</div>',
+		methods: {
+			handleClick: function() {
+				console.log('handleclick');
+				this.bus.$emit('change', this.selfContent);
+			}
+		},
+		mounted: function() {
+			var this_ = this;
+			this.bus.$on('change', function(msg) {
+				console.log(this);
+				console.log(this_);
+				this_.selfContent = msg;
+			});
+		}
+	});
+
+	var vm = new Vue({
+		el: '#root',
+		methods: {
+			
+		}
+	});
+</script>
+
+</body>
+</html>

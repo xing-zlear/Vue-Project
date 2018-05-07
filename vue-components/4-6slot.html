@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的插槽（slot）</title>
+	<script src="../vue.js"></script>
+</head>
+<body>
+
+<div id="root">
+	<child>
+		<h2>zlear</h2>
+	</child>
+
+	<body-content>
+		<div class="header" slot="header">header</div>
+		<div class="footer" slot="footer">footer</div>
+	</body-content>
+	<!-- 作用域插槽 必须是template开头和结尾的-->
+	<childs>
+		<template slot-scope="props">
+			<li>{{props.item}}</li>
+		</template>
+	</childs>
+</div>
+
+<script>	
+	Vue.component('child', {
+		props: ['content'],
+		// template: '<div><p>hello</p><div v-html="this.content"></div></div>'
+		template: '<div><p>hello</p><slot>default</slot></div>'
+	});
+	Vue.component('body-content', {
+		props: ['content'],
+		template: `<div>
+						<slot name="header"></slot>
+						<p class="content">hello</p>
+						<slot name="footer"></slot>					
+					</div>`
+	});
+	// 作用域插槽
+	Vue.component('childs', {
+		data: function() {
+			return {
+				list: [1,2,3,4]
+			}
+		},
+		template: `<div>
+						<ul>
+							<slot v-for="item in list" :item=item>
+								{{item}}
+							</slot>
+						</ul>
+					</div>`
+	});
+
+	var vm = new Vue({
+		el: '#root',
+		methods: {
+			
+		}
+	});
+</script>
+
+</body>
+</html>
