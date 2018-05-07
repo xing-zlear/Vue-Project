@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中多个元素或组件的过渡</title>
+
+	<script src="../vue.js"></script>
+	<style>
+		.fade-enter, .fade-leave-to {
+			opacity: 0;
+		}
+		.fade-enter-active, .fade-leave-active {
+			transition: opacity 1s;
+		}
+	</style>
+</head>
+<body>
+	<div id="root">
+		<h1>多个元素的过渡</h1>
+		<!-- 传统定义 js钩子-->
+		<!-- mode in-out out-in -->
+		<transition name="fade" mode="out-in">
+			<!-- dom会尽量复用，就无法出现动画效果，所以要加key不让dom复用 -->
+			<div v-if="show" key="hello">hello zlear</div>
+			<div v-else key="bye">bye zlear</div>
+		</transition>
+		
+		<button @click="handleClick">cahnge</button>
+
+		<h1>多个组件的过渡(类似于多元素过渡)</h1>
+		<transition name="fade" mode="out-in">
+			<!-- 先用类似于多元素过渡的方法 -->
+			<child v-if="show"></child>
+			<child-one v-else></child-one>
+		</transition>
+		<button @click="handleClick">cahnge</button>
+		<h1>多个组件的过渡(动态组件过渡)</h1>
+		<transition name="fade" mode="out-in">
+			<!-- 动态组件过渡 -->
+			<component :is="type"></component>
+		</transition>
+		<button @click="handleClick2">cahnge</button>
+	</div>
+
+	<script>
+		Vue.component('child', {
+			template: '<div>child</div>'
+		});
+		Vue.component('child-one', {
+			template: '<div>child-one</div>'
+		});
+
+		var vm = new Vue({
+			el: '#root',
+			data: {
+				show: true,
+				type: 'child'
+			},
+			methods: {
+				handleClick: function() {
+					this.show = !this.show;
+				},
+				handleClick2: function() {
+					this.type = this.type === 'child' ? 'child-one' : 'child';
+				}
+			}
+		});
+	</script>
+</body>
+</html>

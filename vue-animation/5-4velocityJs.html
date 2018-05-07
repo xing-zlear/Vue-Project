@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中的JS动画与velocity.js</title>
+
+	<script src="../vue.js"></script>
+	<script src="velocity.min.js"></script>
+	<style>
+		
+	</style>
+</head>
+<body>
+	<div id="root">
+		<!-- 传统定义 js钩子-->
+		<transition
+			name="fade"
+			@before-enter="handleBeforeEnter"
+			@enter="handleEnter"
+			@after-enter="handleAfterEnter"
+			@before-leave=""
+			@leave=""
+			@after-leave="">
+			<div v-if="show">hello zlear</div>
+		</transition>
+		
+		<button @click="handleClick">cahnge</button>
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: '#root',
+			data: {
+				show: true
+			},
+			methods: {
+				handleClick: function() {
+					this.show = !this.show;
+				},
+				handleBeforeEnter: function(el) {
+					el.style.color = "red";
+
+					el.style.opacity = 0;
+				},
+				/* 当只用 JavaScript 过渡的时候， 在 enter 和 leave 中，回调函数 done 是必须的 。否则，它们会被同步调用，过渡会立即完成。
+				当调用了多个done时，done只执行最早的一次 */
+				handleEnter: function(el, done) {
+					setTimeout(() => {
+						el.style.color = "green";
+					},1000);
+					setTimeout(() => {
+						// 手动调用回调函数，告诉vue可以结束动画了
+						done();
+					},3000)
+
+					// Velocity
+					Velocity(el, {opacity: 1}, {
+						duration:2000,
+						complete:done
+					});
+				},
+				handleAfterEnter: function(el) {
+					el.style.color = "blue"
+					// console.log('over');
+				}
+			}
+		});
+	</script>
+</body>
+</html>

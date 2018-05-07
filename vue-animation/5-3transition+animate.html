@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Vue中同时使用animate动画和过渡动画</title>
+	<link rel="stylesheet" type="text/css" href="animate.css">
+	<script src="../vue.js"></script>
+	<style>
+		/*过渡动画*/
+		.fade-enter,
+		.fade-leave-to {
+			opacity: 0;
+		}
+		.fade-enter-active,
+		.fade-leave-active,
+		.fade-appear-active{
+			transition: opacity 3s;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="root">
+		<!-- animate.css库 -->
+		<!-- appear解决首次渲染没有动画的问题 -->
+		<!-- type用transition的动画时长，duration自定义动画时长 (可定义统一时长，也可分别定义入场动画时长和出场动画时长)-->
+		<transition 
+			type="transition"
+			:duration="10000"
+			:duration="{enter: 5000, leave: 10000}"
+			appear name="fade"
+			enter-active-class="animated swing fade-enter-active"
+			leave-active-class="animated shake fade-leave-active"
+			appear-active-class="animated swing fade-appear-active">
+			<div class="aa" v-if="show">zlear fedezer</div>
+		</transition>
+		<button @click="handleClick">cahnge</button>
+	</div>
+
+	<script>
+		var vm = new Vue({
+			el: '#root',
+			data: {
+				show: true
+			},
+			methods: {
+				handleClick: function() {
+					this.show = !this.show;
+				}
+			}
+		});
+	</script>
+</body>
+</html>

@@ -5,25 +5,28 @@
 	<title>Vue中CSS动画原理</title>
 	<script src="../vue.js"></script>
 	<style>
+	.aa {
+			opacity: 0.5;
+		}
 		.fade-enter {
 			opacity: 0;
 		}
 		.fade-enter-active {
-			transition: opacity 3s;
+			transition: opacity 5s;
 		}
-		.fade-leave {
-			opacity: 1;
+		.fade-leave-to {
+			opacity: 0;
 		}
 		.fade-leave-active {
-			transition: opacity 3s;
-
+			transition: opacity 5s;
 		}
+		
 	</style>
 </head>
 <body>
 	<div id="root">
 		<transition name="fade">
-			<div v-if="show">hello zlear</div>
+			<div class="aa" v-if="show">hello zlear</div>
 		</transition>
 		
 		<button @click="handleClick">cahnge</button>
