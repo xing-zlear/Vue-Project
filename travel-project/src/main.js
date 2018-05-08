@@ -5,10 +5,12 @@ import App from './App'
 import router from './router'
 // 移动端点击事件300ms延迟问题
 import fastClick from 'fastclick'
-// 重置样式表
-import './assets/css/reset.css'
+// 重置样式表, @css在webpack.base.conf.js中有配置
+import '@css/reset.css'
 // 移动端的1像素边框问题css(在分辨率高的手机上)
-import './assets/css/border.css'
+import '@css/border.css'
+// iconfont
+import '@css/iconfont.css'
 
 Vue.config.productionTip = false
 // use fastClick
