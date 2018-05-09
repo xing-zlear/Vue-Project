@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="home">
     <home-header></home-header>
     <home-swiper></home-swiper>
-    <div>test</div>
   </div>
 </template>
 
@@ -18,8 +17,8 @@ export default {
 }
 </script>
 
-<style>
-.home {
-  font-size: 50px;
-}
+<style lang="stylus" scoped>
+.home
+  background-color: #ccc;
+
 </style>
