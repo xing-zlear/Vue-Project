@@ -37,3 +37,4 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 - router-link是对a的封装，各种情况下如何使用a标签都封装在router-link中实现，能够同时兼容hashHistory和browserHistory
 - 当我们修改了webpack的一些配置项的时候，我们一定要重启一下服务器
+- 为什么我们要把模拟数据放到static下呢？因为在整个工程里，只有static下的目录能被外部访问到（localhost:8080/static/mock/index.json）, 其他目录会自动跳回首页
