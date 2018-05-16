@@ -29,6 +29,7 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 - 轮播插件：npm安装vue-awesome-swiper，main.js引入module+css文件，并添加使用，详见GitHub（https://github.com/surmon-china/vue-awesome-swiper，http://3.swiper.com.cn）
 - 移动端点击事件300ms延迟问题：npm安装fastclick
 - 移动端的1像素边框问题css + 重置样式表css
+- better-scroll 优化滚动条，类似于APP里的拖动（npm安装）
 
 ## 单页应用VS多页应用
 ![image](https://github.com/xingzhenli/Vue-Project/blob/master/travel-project/static/images/many-page.jpg)
