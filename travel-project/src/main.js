@@ -3,6 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+// vuex
+import store from './store'
 // 轮播插件
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 // require styles
@@ -26,6 +28,7 @@ Vue.use(VueAwesomeSwiper)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
